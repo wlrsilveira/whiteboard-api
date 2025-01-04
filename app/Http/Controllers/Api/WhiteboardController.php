@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\WhiteboardRequest;
+use App\Http\Resources\WhiteboardQrCodeResource;
 use App\Http\Resources\WhiteboardResource;
 use App\Models\Whiteboard;
 use App\Services\WhiteboardService;
@@ -59,5 +60,29 @@ class WhiteboardController extends Controller
         Whiteboard $whiteboard
     ): WhiteboardResource {
         return WhiteboardResource::make($whiteboard->load('user'));
+    }
+
+    public function getQrCode(
+        Whiteboard $whiteboard,
+        WhiteboardService $whiteboardService
+    ): WhiteboardQrCodeResource {
+        $qrCode = $whiteboardService->generateQrCode($whiteboard);
+
+        return WhiteboardQrCodeResource::make([
+            'whiteboard' => $whiteboard,
+            'qr_code' => $qrCode,
+        ]);
+    }
+
+    public function signIn(
+        Whiteboard $whiteboard,
+        WhiteboardService $whiteboardService
+    ): WhiteboardQrCodeResource {
+        $qrCode = $whiteboardService->generateQrCode($whiteboard);
+
+        return WhiteboardQrCodeResource::make([
+            'whiteboard' => $whiteboard,
+            'qr_code' => $qrCode,
+        ]);
     }
 }

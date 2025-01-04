@@ -14,11 +14,20 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
-Route::post('/register', [AuthController::class, 'register']);
-Route::post('/login', [AuthController::class, 'login']);
+Route::post('/register', [AuthController::class, 'register'])->name('register');
+Route::post('/login', [AuthController::class, 'login'])->name('login');
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
 
     Route::resource('whiteboards', WhiteboardController::class);
+    Route::get('/whiteboards/{whiteboard}/qrcode', [
+        WhiteboardController::class,
+        'getQrCode',
+    ])->name('whiteboards.qrcode');
+
+    Route::get('/whiteboards/{Whiteboard:identifier}/signIn', [
+        WhiteboardController::class,
+        'signIn',
+    ])->name('whiteboards.show');
 });

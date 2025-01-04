@@ -4,6 +4,9 @@ namespace App\Services;
 
 use App\Models\User;
 use App\Models\Whiteboard;
+use BaconQrCode\Renderer\Image\SvgImageBackEnd;
+use BaconQrCode\Renderer\ImageRenderer;
+use BaconQrCode\Writer;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
@@ -36,5 +39,19 @@ class WhiteboardService
     public function delete(Whiteboard $whiteboard): void
     {
         $whiteboard->delete();
+    }
+
+    public function generateQrCode(Whiteboard $whiteboard): string
+    {
+        $renderer = new ImageRenderer(
+            new \BaconQrCode\Renderer\RendererStyle\RendererStyle(400),
+            new SvgImageBackEnd
+        );
+
+        $writer = new Writer($renderer);
+
+        $image = $writer->writeString($whiteboard->identifier);
+
+        return 'data:image/png;base64,'.base64_encode($image);
     }
 }
