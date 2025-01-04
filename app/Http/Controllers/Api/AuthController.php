@@ -44,7 +44,7 @@ class AuthController extends Controller
     public function register(UserRequest $request, UserService $userService): UserResource
     {
         $validated = $request->validated();
-        $user = $userService->create($validated);
+        $user = $userService->create(data: $validated);
 
         return UserResource::make($user);
     }
