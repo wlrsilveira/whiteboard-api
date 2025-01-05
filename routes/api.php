@@ -20,7 +20,27 @@ Route::post('/login', [AuthController::class, 'login'])->name('login');
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
 
-    Route::resource('whiteboards', WhiteboardController::class);
+    Route::get('/whiteboards', [WhiteboardController::class, 'index'])
+        ->name('whiteboards.index');
+
+    Route::post('/whiteboards', [WhiteboardController::class, 'store'])
+        ->name('whiteboards.store');
+
+    Route::get('/whiteboards/{whiteboard}', [
+        WhiteboardController::class,
+        'show',
+    ])->name('whiteboards.show');
+
+    Route::put('/whiteboards/{whiteboard}', [
+        WhiteboardController::class,
+        'update',
+    ])->middleware('check.whiteboard.owner')
+        ->name('whiteboards.update');
+
+    Route::delete('/whiteboards/{whiteboard}', [WhiteboardController::class, 'destroy'])
+        ->middleware('check.whiteboard.owner')
+        ->name('whiteboards.destroy');
+
     Route::get('/whiteboards/{whiteboard}/qrcode', [
         WhiteboardController::class,
         'getQrCode',
