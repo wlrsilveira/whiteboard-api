@@ -11,7 +11,7 @@ class AuthControllerTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_login_success()
+    public function test_login_success(): void
     {
         $user = User::factory()->create([
             'email' => 'test@gmail.com',
@@ -27,7 +27,7 @@ class AuthControllerTest extends TestCase
             ->assertJsonStructure(['data' => ['id', 'name', 'email', 'access_token']]);
     }
 
-    public function test_login_failure()
+    public function test_login_failure(): void
     {
         $user = User::factory()->create([
             'email' => 'test@gmail.com',
@@ -43,7 +43,7 @@ class AuthControllerTest extends TestCase
             ->assertJsonValidationErrors(['email']);
     }
 
-    public function test_logout()
+    public function test_logout(): void
     {
         $user = User::factory()->create();
         $token = $user->createToken('auth_token')->plainTextToken;
@@ -55,7 +55,7 @@ class AuthControllerTest extends TestCase
             ->assertJson(['message' => 'Logged out successfully']);
     }
 
-    public function test_register()
+    public function test_register(): void
     {
         $response = $this->postJson('/api/register', [
             'name' => 'Test User',

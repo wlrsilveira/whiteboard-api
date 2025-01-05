@@ -8,6 +8,7 @@ use App\Http\Resources\WhiteboardQrCodeResource;
 use App\Http\Resources\WhiteboardResource;
 use App\Models\Whiteboard;
 use App\Services\WhiteboardService;
+use Illuminate\Http\Response;
 
 class WhiteboardController extends Controller
 {
@@ -50,10 +51,12 @@ class WhiteboardController extends Controller
     public function destroy(
         Whiteboard $whiteboard,
         WhiteboardService $whiteboardService
-    ): void {
+    ): Response {
         $whiteboardService->delete(
             whiteboard: $whiteboard
         );
+
+        return response()->noContent();
     }
 
     public function show(
@@ -77,12 +80,7 @@ class WhiteboardController extends Controller
     public function signIn(
         Whiteboard $whiteboard,
         WhiteboardService $whiteboardService
-    ): WhiteboardQrCodeResource {
-        $qrCode = $whiteboardService->generateQrCode($whiteboard);
-
-        return WhiteboardQrCodeResource::make([
-            'whiteboard' => $whiteboard,
-            'qr_code' => $qrCode,
-        ]);
+    ): void {
+        // TODO
     }
 }
