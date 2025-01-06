@@ -44,14 +44,14 @@ class WhiteboardService
     public function generateQrCode(Whiteboard $whiteboard): string
     {
         $renderer = new ImageRenderer(
-            new \BaconQrCode\Renderer\RendererStyle\RendererStyle(400),
+            new \BaconQrCode\Renderer\RendererStyle\RendererStyle(150),
             new SvgImageBackEnd
         );
 
         $writer = new Writer($renderer);
 
-        $image = $writer->writeString($whiteboard->identifier);
+        $url =config('services.frontend.url') . '/' . $whiteboard->id;
 
-        return 'data:image/png;base64,'.base64_encode($image);
+        return $writer->writeString($url);
     }
 }
