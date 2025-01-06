@@ -12,6 +12,9 @@ class UserResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'email' => $this->email,
+            'whiteboards' => WhiteboardResource::collection(
+                $this->whenLoaded('whiteboards')
+            ),
         ];
     }
 }
