@@ -8,6 +8,7 @@ use App\Http\Resources\WhiteboardQrCodeResource;
 use App\Http\Resources\WhiteboardResource;
 use App\Models\Whiteboard;
 use App\Services\WhiteboardService;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 class WhiteboardController extends Controller
@@ -77,10 +78,11 @@ class WhiteboardController extends Controller
         ]);
     }
 
-    public function signIn(
+    public function drawing(
         Whiteboard $whiteboard,
+        Request $request,
         WhiteboardService $whiteboardService
     ): void {
-        // TODO
+        $whiteboardService->drawing($whiteboard, $request->all());
     }
 }

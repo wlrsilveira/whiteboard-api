@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Events\DrawingUpdated;
 use App\Models\User;
 use App\Models\Whiteboard;
 use BaconQrCode\Renderer\Image\SvgImageBackEnd;
@@ -53,5 +54,10 @@ class WhiteboardService
         $url =config('services.frontend.url') . '/' . $whiteboard->id;
 
         return $writer->writeString($url);
+    }
+
+    public function drawing(Whiteboard $whiteboard, array $data): void
+    {
+        broadcast(new DrawingUpdated($data, $whiteboard->identifier));
     }
 }

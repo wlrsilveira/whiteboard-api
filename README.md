@@ -25,3 +25,5 @@ This application, is a application with real-time collaboration features, user a
 5 - Run migrations `php artisan migrate`
 
 6 - The project will be running on port 8000: `localhost:8000`
+
+6 - Change .env variables

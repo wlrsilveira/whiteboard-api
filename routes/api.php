@@ -50,4 +50,9 @@ Route::middleware('auth:sanctum')->group(function () {
         WhiteboardController::class,
         'signIn',
     ])->name('whiteboards.show');
+
+    Route::post('/whiteboards/{Whiteboard:identifier}/drawing', [
+        WhiteboardController::class,
+        'drawing',
+    ])->name('whiteboards.drawing');
 });
